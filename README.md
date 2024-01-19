@@ -50,7 +50,7 @@ Request Body:
 ### POST /v1/images/generations
 Generates images based on the provided text prompt.
 
-(Some of the) Models available: Midjourney, SDXL, Leonardo.AI, Kandinsky-2(.2), Stable-Diffusion 2.1/1.5
+(Some of the) Models available can be found [here](https://zukijourney.xyzbot.net/v1/models/images)
 
 Request Body: 
 {
@@ -66,7 +66,7 @@ Retrieves the image with the given UUID and extension.
 ### POST /v1/chat/completions (or unf/chat/completions for roleplay.)
 Generates text completions based on the provided text.
 
-(Some of the) Models available: GPT-4, GPT-3.5, Claude-2, Inflection-Pi, LLama-2, Mistral-7b, CodeLlama-34B, Bard-Palm2.
+(Some of the) Models available can be found [here](https://zukijourney.xyzbot.net/v1/models)
 
 Request Body: 
 {
