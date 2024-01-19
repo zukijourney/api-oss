@@ -1,8 +1,8 @@
 # zukijourney-api
 
-The zukijourney API has been a rising star in the API sphere, amassing to over 200 million requests already, despite only being about 2 months old! With 2.5k concurrent active users, the API has proven reliable, sturdy, and splendid for any AI usage! :)
+The zukijourney API has been a rising star in the API sphere, amassing to over 400 million requests already, despite only being about 3 months old! With nearly 4k concurrent active users, the API has proven reliable, sturdy, and splendid for any AI usage! :) -- and has become the largest API of its kind!
 
-#### Especially, as seen by its cloudflare statistics:
+#### Especially, as seen by its cloudflare statistics over the last month:
 ![image](https://github.com/zukixa/zukijourney-api/assets/56563509/fd9f3b57-1761-4495-9b61-703cc6e2be66)
 
 
