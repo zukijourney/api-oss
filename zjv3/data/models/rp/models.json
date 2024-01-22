@@ -1,0 +1,157 @@
+{
+    "object": "list",
+    "data": [
+        {
+            "id": "gpt-3.5-turbo",
+            "object": "model",
+            "created": 0,
+            "owned_by": "openai",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-3.5-turbo-16k",
+            "object": "model",
+            "created": 0,
+            "owned_by": "openai",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-4",
+            "object": "model",
+            "created": 0,
+            "owned_by": "openai",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "claude-instant-v1",
+            "object": "model",
+            "created": 0,
+            "owned_by": "anthropic",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "gemini-pro",
+            "object": "model",
+            "created": 0,
+            "owned_by": "google",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "palm-2",
+            "object": "model",
+            "created": 0,
+            "owned_by": "google",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "mixtral-8x7b-instruct",
+            "object": "model",
+            "created": 0,
+            "owned_by": "mistralai",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "mistral-medium",
+            "object": "model",
+            "created": 0,
+            "owned_by": "mistralai",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "mistral-7b-instruct",
+            "object": "model",
+            "created": 0,
+            "owned_by": "mistralai",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "codellama-7b-instruct",
+            "object": "model",
+            "created": 0,
+            "owned_by": "meta",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "llama-2-7b",
+            "object": "model",
+            "created": 0,
+            "owned_by": "meta",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "llama-2-13b",
+            "object": "model",
+            "created": 0,
+            "owned_by": "meta",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "llama-2-70b",
+            "object": "model",
+            "created": 0,
+            "owned_by": "meta",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "sheep-duck-llama",
+            "object": "model",
+            "created": 0,
+            "owned_by": "replicate",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "goliath-120b",
+            "object": "model",
+            "created": 0,
+            "owned_by": "replicate",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "nous-llama2",
+            "object": "model",
+            "created": 0,
+            "owned_by": "replicate",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "yi-34b",
+            "object": "model",
+            "created": 0,
+            "owned_by": "replicate",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "openchat",
+            "object": "model",
+            "created": 0,
+            "owned_by": "replicate",
+            "permission": [],
+            "type": "chat.completions"
+        },
+        {
+            "id": "solar10-7b",
+            "object": "model",
+            "created": 0,
+            "owned_by": "replicate",
+            "permission": [],
+            "type": "chat.completions"
+        }
+    ]
+}

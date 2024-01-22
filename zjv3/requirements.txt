@@ -1,0 +1,16 @@
+uvicorn[standard]
+fastapi
+openai
+tiktoken
+pyrate-limiter
+httpx
+aiofiles
+aiohttp
+asyncer
+asgiref
+python-multipart
+poe-api-wrapper
+nltk
+google-generativeai
+g4f
+gunicorn
