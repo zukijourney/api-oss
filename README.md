@@ -22,14 +22,5 @@ This is a list of all the endpoints that are currently available, so people won'
 # Install dependencies
 pip install -r requirements.txt
 # Run the server
-chmod +x run.sh && screen ./run.sh
-```
-### Bot
-```bash
-# Go to the bot's folder
-cd bot/
-# Install dependencies
-pip install -r requirements.txt
-# Run the server
-chmod +x run.sh && screen python3 bot.py
+python3 run --(dev/prod)
 ```
