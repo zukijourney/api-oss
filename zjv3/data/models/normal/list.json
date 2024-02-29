@@ -1,0 +1,464 @@
+{
+    "object": "list",
+    "data": [
+        {
+            "id": "gpt-3.5-turbo-0301",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-3.5-turbo-0613",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-3.5-turbo",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-3.5-turbo-1106",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-3.5-turbo-0125",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-3.5-turbo-instruct",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-3.5-turbo-16k",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-4-0314",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-4-0613",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-4",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-4-1106-preview",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-4-0125-preview",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gpt-4-vision-preview",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "claude",
+            "object": "model",
+            "owned_by": "anthropic",
+            "type": "chat.completions"
+        },
+        {
+            "id": "claude-1.2",
+            "object": "model",
+            "owned_by": "anthropic",
+            "type": "chat.completions"
+        },
+        {
+            "id": "claude-2",
+            "object": "model",
+            "owned_by": "anthropic",
+            "type": "chat.completions"
+        },
+        {
+            "id": "claude-2.1",
+            "object": "model",
+            "owned_by": "anthropic",
+            "type": "chat.completions"
+        },
+        {
+            "id": "claude-instant-v1",
+            "object": "model",
+            "owned_by": "anthropic",
+            "type": "chat.completions"
+        },
+        {
+            "id": "claude-instant-v1-100k",
+            "object": "model",
+            "owned_by": "anthropic",
+            "type": "chat.completions"
+        },
+        {
+            "id": "palm-2",
+            "object": "model",
+            "owned_by": "google",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gemini-pro",
+            "object": "model",
+            "owned_by": "google",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gemini-pro-vision",
+            "object": "model",
+            "owned_by": "google",
+            "type": "chat.completions"
+        },
+        {
+            "id": "gemmma-7b",
+            "object": "model",
+            "owned_by": "google",
+            "type": "chat.completions"
+        },
+        {
+            "id": "mixtral-8x7b-instruct",
+            "object": "model",
+            "owned_by": "mistralai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "mistral-tiny",
+            "object": "model",
+            "owned_by": "mistralai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "mistral-small",
+            "object": "model",
+            "owned_by": "mistralai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "mistral-medium",
+            "object": "model",
+            "owned_by": "mistralai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "mistral-7b-instruct",
+            "object": "model",
+            "owned_by": "mistralai",
+            "type": "chat.completions"
+        },
+        {
+            "id": "codellama-7b-instruct",
+            "object": "model",
+            "owned_by": "meta",
+            "type": "chat.completions"
+        },
+        {
+            "id": "llama-2-7b",
+            "object": "model",
+            "owned_by": "meta",
+            "type": "chat.completions"
+        },
+        {
+            "id": "llama-2-13b",
+            "object": "model",
+            "owned_by": "meta",
+            "type": "chat.completions"
+        },
+        {
+            "id": "llama-2-70b",
+            "object": "model",
+            "owned_by": "meta",
+            "type": "chat.completions"
+        },
+        {
+            "id": "nous-llama2",
+            "object": "model",
+            "owned_by": "replicate",
+            "type": "chat.completions"
+        },
+        {
+            "id": "yi-34b",
+            "object": "model",
+            "owned_by": "replicate",
+            "type": "chat.completions"
+        },
+        {
+            "id": "openchat",
+            "object": "model",
+            "owned_by": "replicate",
+            "type": "chat.completions"
+        },
+        {
+            "id": "pi",
+            "object": "model",
+            "owned_by": "pi",
+            "type": "chat.completions"
+        },
+        {
+            "id": "mythomist-7b",
+            "object": "model",
+            "created": 0,
+            "owned_by": "gryphe",
+            "type": "chat.completions"
+        },
+        {
+            "id": "mythomax-l2-13b",
+            "object": "model",
+            "created": 0,
+            "owned_by": "gryphe",
+            "type": "chat.completions"
+        },
+        {
+            "id": "cinematika-7b",
+            "object": "model",
+            "created": 0,
+            "owned_by": "openrouter",
+            "type": "chat.completions"
+        },
+        {
+            "id": "dall-e-3",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "images.generations"
+        },
+        {
+            "id": "midjourney",
+            "object": "model",
+            "owned_by": "midjourney",
+            "type": "images.generations"
+        },
+        {
+            "id": "sdxl",
+            "object": "model",
+            "owned_by": "stable-diffusion",
+            "type": "images.generations"
+        },
+        {
+            "id": "sdxl-turbo",
+            "object": "model",
+            "owned_by": "stable-diffusion",
+            "type": "images.generations"
+        },
+        {
+            "id": "sdxl-lightning-fast",
+            "object": "model",
+            "owned_by": "bytedance",
+            "type": "images.generations"
+        },
+        {
+            "id": "kandinsky-2.2",
+            "object": "model",
+            "owned_by": "sberbank",
+            "type": "images.generations"
+        },
+        {
+            "id": "kandinsky-3",
+            "object": "model",
+            "owned_by": "sberbank",
+            "type": "images.generations"
+        },
+        {
+            "id": "opendalle-v4",
+            "object": "model",
+            "owned_by": "replicate",
+            "type": "images.generations"
+        },
+        {
+            "id": "latent-consistency-model",
+            "object": "model",
+            "owned_by": null,
+            "type": "images.generations"
+        },
+        {
+            "id": "playground-v2",
+            "object": "model",
+            "owned_by": "playgroundai",
+            "type": "images.generations"
+        },
+        {
+            "id": "pollinations",
+            "object": "model",
+            "owned_by": "pollinationsai",
+            "type": "images.generations"
+        },
+        {
+            "id": "realvisxl-v3",
+            "object": "model",
+            "owned_by": "replicate",
+            "type": "images.generations"
+        },
+        {
+            "id": "pixart-xl-2",
+            "object": "model",
+            "owned_by": "replicate",
+            "type": "images.generations"
+        },
+        {
+            "id": "pastel-mix-anime",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "absolute-reality-v1.6",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "absolute-reality-v1.8.1",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "anything-v3",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "anything-v4.5",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "anything-v5",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "meinamix",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "deliberate-v2",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "deliberate-v3",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "rev-animated",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "dreamshaper-6",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "dreamshaper-7",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "dreamshaper-8",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "realistic-vision-v1.4",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "realistic-vision-v2",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "realistic-vision-v4",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "realistic-vision-v5",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "openjourney-v4",
+            "object": "model",
+            "owned_by": "prodia",
+            "type": "images.generations"
+        },
+        {
+            "id": "tts-1",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "audio.speech"
+        },
+        {
+            "id": "text-embedding-ada-002",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "embeddings"
+        },
+        {
+            "id": "text-embedding-3-small",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "embeddings"
+        },
+        {
+            "id": "text-embedding-3-large",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "embeddings"
+        },
+        {
+            "id": "e5-mistral-7b-instruct",
+            "object": "model",
+            "owned_by": "mistralai",
+            "type": "embeddings"
+        },
+        {
+            "id": "whisper",
+            "object": "model",
+            "owned_by": "openai",
+            "type": "audio.transcriptions"
+        }
+    ]
+}
