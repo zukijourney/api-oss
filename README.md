@@ -4,7 +4,7 @@ The not-so-incredible code for the Zukijourney API and bot. 🤖
 
 ## Requirements
 - Python 3.9+ 🐍
-- MongoDB Database 📚
+- Redis Database 📚
 - A Braincell 🧠
 
 ## Endpoints
