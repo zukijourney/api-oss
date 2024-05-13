@@ -1,6 +1,6 @@
 # 💻 Zukijourney - Code
 
-The not-so-incredible code for the Zukijourney API and bot. 🤖
+The not-so-incredible code for the Zukijourney API and bot. 🤖 \
 Documentation on the current, operational version of Zukijourney is available here: [https://github.com/zukijourney/api-docs](https://github.com/zukijourney/api-docs)
 
 ## Requirements
