@@ -1,0 +1,30 @@
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: ./api
+    network_mode: host
+    restart: always
+    volumes:
+      - ./credits.yml:/app/credits.yml
+
+  bot:
+    build:
+      dockerfile: Dockerfile
+      context: ./bot
+    network_mode: host
+    restart: always
+    volumes:
+      - ./credits.yml:/app/credits.yml
+
+  db:
+    image: mongo:latest
+    network_mode: host
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+    env_file:
+      - ./secrets/db.env
+
+volumes:
+  mongo-data:

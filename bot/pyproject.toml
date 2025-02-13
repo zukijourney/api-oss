@@ -1,0 +1,15 @@
+[project]
+name = "bot"
+version = "1.0.0"
+requires-python = ">=3.11"
+description = ""
+dependencies = [
+    "discord-py>=2.4.0",
+    "motor>=3.6.0",
+    "pydantic>=2.9.2",
+    "pydantic-settings>=2.5.2",
+    "pyyaml>=6.0.2",
+    "asgiref>=3.8.1",
+    "python-dateutil>=2.9.0.post0",
+    "httpx>=0.28.1",
+]
