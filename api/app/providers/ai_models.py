@@ -113,14 +113,12 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
     o1 = Model(
         id='o1',
         pricing=ModelPricingInfo(multiplier=5),
-        is_free=False,
-        is_early_access=True
+        is_free=False
     )
     o3_mini = Model(
         id='o3-mini',
         pricing=ModelPricingInfo(multiplier=2),
-        is_free=False,
-        is_early_access=True
+        is_free=False
     )
     claude_3_haiku = Model(
         id='claude-3-haiku',
@@ -148,6 +146,18 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         id='claude-3.5-sonnet-v2',
         owned_by='anthropic',
         pricing=ModelPricingInfo(multiplier=1.5),
+        is_free=False
+    )
+    claude_37_sonnet = Model(
+        id='claude-3.7-sonnet',
+        owned_by='anthropic',
+        pricing=ModelPricingInfo(multiplier=1.75),
+        is_free=False
+    )
+    claude_37_sonnet_thinking = Model(
+        id='claude-3.7-sonnet-thinking',
+        owned_by='anthropic',
+        pricing=ModelPricingInfo(multiplier=3.5),
         is_free=False
     )
     gemini_15_pro_latest = Model(
@@ -183,14 +193,12 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         id='gemini-2.0-flash',
         owned_by='google',
         pricing=ModelPricingInfo(multiplier=1.5),
-        is_early_access=True,
         is_free=False
     )
     gemini_20_flash_lite_preview_02_05 = Model(
         id='gemini-2.0-flash-lite-preview-02-05',
         owned_by='google',
         pricing=ModelPricingInfo(multiplier=1.5),
-        is_early_access=True,
         is_free=False
     )
     gemini_20_pro_exp_02_05 = Model(
@@ -223,10 +231,20 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         owned_by='x-ai',
         pricing=ModelPricingInfo(multiplier=0.75)
     )
-    grok_2_mini = Model(
+    grok_2_mini2 = Model(
         id='grok-2-larp',
         owned_by='zukijourney',
         pricing=ModelPricingInfo(multiplier=0.75)
+    )
+    grok_3 = Model(
+        id='grok-3',
+        owned_by='xai',
+        pricing=ModelPricingInfo(multiplier=2.75)
+    )
+    grok_3_mini = Model(
+        id='grok-3-mini',
+        owned_by='xai',
+        pricing=ModelPricingInfo(multiplier=1.75)
     )
     reka_core = Model(
         id='reka-core',
@@ -281,14 +299,6 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         id='minimax',
         owned_by='moonshot'
     )
-    internvl = Model(
-        id='internvl2.5-78b',
-        owned_by='opengvlab'
-    )
-    a34b = Model(
-        id='airoboros-34b-3.3',
-        owned_by='jondurbin'
-    )
     tulu_3_405b_instruct = Model(
         id='tulu-3-405b-instruct',
         owned_by='allenai'
@@ -308,51 +318,18 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         owned_by='allenai',
         pricing=ModelPricingInfo(multiplier=0.15)
     )
-    
-    qwq_32b_preview = Model(
-        id='qwq-32b-preview',
-        owned_by='alibaba',
-        pricing=ModelPricingInfo(multiplier=1)
-    )
-    qwq_72b_preview = Model(
-        id='qvq-72b-preview',
-        owned_by='alibaba',
-        pricing=ModelPricingInfo(multiplier=1.25)
-    )
-    qwq_long = Model(
-        id='qwen2.5-14b-instruct-1m',
-        owned_by='alibaba',
-        pricing=ModelPricingInfo(multiplier=1.5)
-    )
-    qwq_big = Model(
-        id='qwen2.5-plus',
-        owned_by='alibaba',
-        pricing=ModelPricingInfo(multiplier=1.5),
-        is_free=False
-    )
-    qwq_fart = Model(
-        id='qwen2.5-max',
-        owned_by='alibaba',
-        pricing=ModelPricingInfo(multiplier=1.5),
-        is_free=False
-    )
-    kimi15 = Model(
-        id='kimi-1.5',
-        owned_by='moonshot',
-        pricing=ModelPricingInfo(multiplier=0.75)
-    )
-    amazon_nova = Model(
+    amazon_nova_pro = Model(
         id='amazon-nova-pro-v1.0',
         owned_by='amazon',
         pricing=ModelPricingInfo(multiplier=1.75),
         is_free=False
     )
-    amazon_lite = Model(
+    amazon_nova_lite = Model(
         id='amazon-nova-lite-v1.0',
         owned_by='amazon',
         pricing=ModelPricingInfo(multiplier=1.25)
     )
-    amazon_micro = Model(
+    amazon_nova_micro = Model(
         id='amazon-nova-micro-v1.0',
         owned_by='amazon',
         pricing=ModelPricingInfo(multiplier=0.75)
@@ -501,6 +478,23 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         owned_by='alibaba',
         pricing=ModelPricingInfo(multiplier=0.15)
     )
+    qwen25_72b_instruct = Model(
+        id='qwen2.5-72b-instruct',
+        owned_by='alibaba'
+    )
+    qwen25_coder_32b_instruct = Model(
+        id='qwen2.5-coder-32b-instruct',
+        owned_by='alibaba'
+    )
+    deepseek_r1_distill_qwen_32b = Model(
+        id='deepseek-r1-distill-qwen-32b',
+        owned_by='deepseek'
+    )
+    qwq_32b_preview = Model(
+        id='qwq-32b-preview',
+        owned_by='alibaba',
+        pricing=ModelPricingInfo(multiplier=1)
+    )
     sqlcoder_7b_2 = Model(
         id='sqlcoder-7b-2',
         owned_by='defog',
@@ -539,14 +533,6 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         id='llama-3.1-nemotron-70b-instruct',
         owned_by='nvidia'
     )
-    qwen25_72b_instruct = Model(
-        id='qwen2.5-72b-instruct',
-        owned_by='alibaba'
-    )
-    qwen25_coder_32b_instruct = Model(
-        id='qwen2.5-coder-32b-instruct',
-        owned_by='alibaba'
-    )
     wizardlm_2_8x22b = Model(
         id='WizardLM-2-8x22B',
         owned_by='microsoft'
@@ -563,19 +549,6 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         id='deepseek-reasoner',
         owned_by='deepseek',
         pricing=ModelPricingInfo(multiplier=1.5)
-    )
-    deepseek_reasoner_zero = Model(
-        id='deepseek-reasoner-zero',
-        owned_by='deepseek',
-        pricing=ModelPricingInfo(multiplier=1.75)
-    )
-    deepseek_r1_distill_llama_3_1_70b = Model(
-        id='deepseek-r1-distill-llama-3.1-70b',
-        owned_by='deepseek'
-    )
-    deepseek_r1_distill_qwen_32b = Model(
-        id='deepseek-r1-distill-qwen-32b',
-        owned_by='deepseek'
     )
     rogue_rose_103b_v0_2 = Model(
         id='rogue-rose-103b-v0.2',
@@ -599,6 +572,10 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         owned_by='zukijourney',
         pricing=ModelPricingInfo(multiplier=0.25)
     )
+    r11776 = Model(
+        id='r1-1776',
+        owned_by='perplexity'
+    )
     sonar = Model(
         id='sonar',
         owned_by='perplexity'
@@ -610,7 +587,13 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
     )
     sonar_reasoning = Model(
         id='sonar-reasoning',
-        pricing=ModelPricingInfo(multiplier=1.5),
+        pricing=ModelPricingInfo(multiplier=1.25),
+        is_free=False,
+        owned_by='perplexity'
+    )
+    sonar_reasoning_pro = Model(
+        id='sonar-reasoning-pro',
+        pricing=ModelPricingInfo(multiplier=1.75),
         is_free=False,
         owned_by='perplexity'
     )
@@ -673,6 +656,12 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         owned_by='black-forest-labs',
         endpoint='/v1/images/generations',
         is_free=False
+    )
+    grok2aur = Model(
+        id='grok-2a',
+        pricing=ModelPricingInfo(price=750),
+        owned_by='xai',
+        endpoint='/v1/images/generations'
     )
     pollinations = Model(
         id='pollinations',
@@ -1042,12 +1031,12 @@ class ModelRegistry(metaclass=ModelRegistryMeta):
         pricing=ModelPricingInfo(price=100),
         endpoint='/v1/moderations'
     )
-    te3l = Model(
+    text_embedding_3_large = Model(
         id='text-embedding-3-large',
         pricing=ModelPricingInfo(price=100),
         endpoint='/v1/embeddings'
     )
-    te3s = Model(
+    text_embedding_3_small = Model(
         id='text-embedding-3-small',
         pricing=ModelPricingInfo(price=100),
         endpoint='/v1/embeddings'

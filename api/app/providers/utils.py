@@ -1,8 +1,10 @@
 import time
+import ujson
+import random
+import string
 import functools
 import httpx
 from dataclasses import dataclass
-from collections import deque
 from fastapi import Request
 from typing import List, Dict, Any, Callable, Coroutine, Optional
 from ..responses import StreamingResponseWithStatusCode
@@ -31,7 +33,10 @@ class ErrorHandler:
                 current_func = func
 
                 for attempt in range(max_retries):
-                    response = await current_func(*args, **kwargs)
+                    try:
+                        response = await current_func(*args, **kwargs)
+                    except TypeError:
+                        continue
 
                     if isinstance(response, StreamingResponseWithStatusCode):
                         first_chunk, status_code = await response.body_iterator.__anext__()
@@ -87,6 +92,10 @@ class ErrorHandler:
             return None
 
         provider_class = BaseProvider.get_provider_class(provider['name'])
+
+        if not provider_class:
+            return None
+
         return getattr(provider_class, current_func.__name__)
 
     async def _wrap_streaming_response(
@@ -105,11 +114,103 @@ class ErrorHandler:
             media_type='text/event-stream'
         )
 
+class MessageFormatter:
+    @staticmethod
+    def format_content(content: Any) -> str:
+        if isinstance(content, str):
+            return content
+        return '\n'.join(
+            content_part['text']
+            for content_part in content
+            if content_part['type'] == 'text'
+        )
+
+    @staticmethod
+    def format_messages(messages: List[Dict[str, Any]]) -> str:
+        return '\n'.join(
+            f'{msg["role"]}: {MessageFormatter.format_content(msg["content"])}'
+            for msg in messages
+        )
+
+class ResponseGenerator:
+    @staticmethod
+    def generate_error(message: str, provider_id: str) -> str:
+        error_response = {
+            'error': {
+                'message': message,
+                'provider_id': provider_id,
+                'type': 'invalid_response_error',
+                'code': 500
+            }
+        }
+        return ResponseGenerator._serialize_json(error_response)
+
+    @staticmethod
+    def generate_chunk(
+        content: str,
+        model: str,
+        system_fp: str,
+        completion_id: str,
+        provider_id: str
+    ) -> str:
+        chunk_response = {
+            'provider_id': provider_id,
+            'id': completion_id,
+            'object': 'chat.completion.chunk',
+            'created': int(time.time()),
+            'model': model,
+            'choices': [
+                {
+                    'index': 0,
+                    'delta': {
+                        'role': 'assistant',
+                        'content': content
+                    }
+                }
+            ],
+            'system_fingerprint': system_fp
+        }
+        return ResponseGenerator._serialize_json(chunk_response, False)
+
+    @staticmethod
+    def _serialize_json(obj: Dict[str, Any], indented: bool = True) -> str:
+        if indented:
+            return ujson.dumps(
+                obj=obj,
+                ensure_ascii=False,
+                allow_nan=False,
+                indent=4,
+                separators=(', ', ': '),
+                escape_forward_slashes=False
+            )
+
+        return ujson.dumps(
+            obj=obj,
+            ensure_ascii=False,
+            allow_nan=False,
+            escape_forward_slashes=False
+        )
+
+class IDGenerator:
+    COMPLETION_PREFIX = 'chatcmpl-A'
+    FINGERPRINT_PREFIX = 'fp_'
+    
+    @staticmethod
+    def _generate_random_string(length: int, chars: str) -> str:
+        return ''.join(random.choices(chars, k=length))
+
+    @classmethod
+    def generate_completion_id(cls) -> str:
+        return f'{cls.COMPLETION_PREFIX}{cls._generate_random_string(29, string.ascii_letters + string.digits)}'
+
+    @classmethod
+    def generate_fingerprint(cls) -> str:
+        return f'{cls.FINGERPRINT_PREFIX}{cls._generate_random_string(10, string.hexdigits.lower())}'
+
 class WebhookManager:
     def __init__(self):
         self.config = WebhookConfig()
-        self.recent_exceptions = deque(maxlen=50)
-        self.blacklisted_providers = []
+        self.blacklisted_providers = ['goo', 'su', 'gog', 'got', 'ch', 'hy']
 
     def _create_embed_data(
         self,
@@ -169,21 +270,6 @@ class WebhookManager:
         
         return payload
 
-    def _should_send_exception(self, exception: Optional[str]) -> bool:
-        if not exception:
-            return True
-
-        exception_key = exception[:100]
-
-        current_time = time.time()
-
-        for exc_key, timestamp in self.recent_exceptions:
-            if exc_key == exception_key and current_time - timestamp < 120:
-                return False
-
-        self.recent_exceptions.append((exception_key, current_time))
-        return True
-
     @classmethod
     async def send_to_webhook(
         cls,
@@ -198,9 +284,6 @@ class WebhookManager:
         if pid in instance.blacklisted_providers:
             return
 
-        if is_error and not instance._should_send_exception(exception):
-            return
-
         embed_data = instance._create_embed_data(
             is_error=is_error,
             model=model,
@@ -213,3 +296,123 @@ class WebhookManager:
 
         async with httpx.AsyncClient() as client:
             await client.post(settings.webhook_url, json=payload)
+
+
+from curl_cffi.requests import AsyncSession, Response
+from curl_cffi import CurlMime
+has_curl_mime = True
+from curl_cffi.requests import CurlWsFlag
+has_curl_ws = True
+from typing import AsyncGenerator, Any
+from functools import partialmethod
+import json
+
+class StreamResponse:
+    """
+    A wrapper class for handling asynchronous streaming responses.
+
+    Attributes:
+        inner (Response): The original Response object.
+    """
+
+    def __init__(self, inner: Response) -> None:
+        """Initialize the StreamResponse with the provided Response object."""
+        self.inner: Response = inner
+
+    async def text(self) -> str:
+        """Asynchronously get the response text."""
+        return await self.inner.atext()
+
+    def raise_for_status(self) -> None:
+        """Raise an HTTPError if one occurred."""
+        self.inner.raise_for_status()
+
+    async def json(self, **kwargs) -> Any:
+        """Asynchronously parse the JSON response content."""
+        return json.loads(await self.inner.acontent(), **kwargs)
+
+    def iter_lines(self) -> AsyncGenerator[bytes, None]:
+        """Asynchronously iterate over the lines of the response."""
+        return  self.inner.aiter_lines()
+
+    def iter_content(self) -> AsyncGenerator[bytes, None]:
+        """Asynchronously iterate over the response content."""
+        return self.inner.aiter_content()
+
+    async def __aenter__(self):
+        """Asynchronously enter the runtime context for the response object."""
+        inner: Response = await self.inner
+        self.inner = inner
+        self.request = inner.request
+        self.status: int = inner.status_code
+        self.reason: str = inner.reason
+        self.ok: bool = inner.ok
+        self.headers = inner.headers
+        self.cookies = inner.cookies
+        return self
+
+    async def __aexit__(self, *args):
+        """Asynchronously exit the runtime context for the response object."""
+        await self.inner.aclose()
+
+class StreamSession(AsyncSession):
+    """
+    An asynchronous session class for handling HTTP requests with streaming.
+
+    Inherits from AsyncSession.
+    """
+
+    def request(
+        self, method: str, url: str, **kwargs
+    ) -> StreamResponse:
+        if isinstance(kwargs.get("data"), CurlMime):
+            kwargs["multipart"] = kwargs.pop("data")
+        """Create and return a StreamResponse object for the given HTTP request."""
+        return StreamResponse(super().request(method, url, stream=True, **kwargs))
+
+    def ws_connect(self, url, *args, **kwargs):
+        return WebSocket(self, url, **kwargs)
+
+    def _ws_connect(self, url, **kwargs):
+        return super().ws_connect(url, **kwargs)
+
+    # Defining HTTP methods as partial methods of the request method.
+    head = partialmethod(request, "HEAD")
+    get = partialmethod(request, "GET")
+    post = partialmethod(request, "POST")
+    put = partialmethod(request, "PUT")
+    patch = partialmethod(request, "PATCH")
+    delete = partialmethod(request, "DELETE")
+    options = partialmethod(request, "OPTIONS")
+
+if has_curl_mime:
+    class FormData(CurlMime):
+        def add_field(self, name, data=None, content_type: str = None, filename: str = None) -> None:
+            self.addpart(name, content_type=content_type, filename=filename, data=data)
+else:
+    class FormData():
+        def __init__(self) -> None:
+            raise RuntimeError("CurlMimi in curl_cffi is missing | pip install -U g4f[curl_cffi]")
+
+class WebSocket():
+    def __init__(self, session, url, **kwargs) -> None:
+        if not has_curl_ws:
+            raise RuntimeError("CurlWsFlag in curl_cffi is missing | pip install -U g4f[curl_cffi]")
+        self.session: StreamSession = session
+        self.url: str = url
+        del kwargs["autoping"]
+        self.options: dict = kwargs
+
+    async def __aenter__(self):
+        self.inner = await self.session._ws_connect(self.url, **self.options)
+        return self
+
+    async def __aexit__(self, *args):
+        await self.inner.aclose()
+
+    async def receive_str(self, **kwargs) -> str:
+        bytes, _ = await self.inner.arecv()
+        return bytes.decode(errors="ignore")
+
+    async def send_str(self, data: str):
+        await self.inner.asend(data.encode(), CurlWsFlag.TEXT)

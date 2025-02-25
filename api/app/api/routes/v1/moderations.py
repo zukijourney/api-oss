@@ -66,6 +66,8 @@ async def moderations(
             status_code=e.status_code,
             detail=str(e)
         )
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(
             status_code=500,

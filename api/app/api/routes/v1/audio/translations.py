@@ -42,7 +42,7 @@ class AudioHandler:
         return model_instance.pricing.price
 
 @router.post('', dependencies=DEPENDENCIES, response_model=None)
-async def audio_transcriptions(
+async def audio_translations(
     request: Request,
     model: str = Form(...),
     file: UploadFile = File(...)
@@ -75,6 +75,8 @@ async def audio_transcriptions(
             status_code=e.status_code,
             detail=str(e)
         )
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(
             status_code=500,

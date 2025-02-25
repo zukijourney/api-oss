@@ -61,7 +61,7 @@ class DatabaseManager:
     def _create_model_metrics(self, models: List[str]) -> Dict[str, Dict[str, int]]:
         return {
             metric: {model: 0 for model in models}
-            for metric in ['usage', 'failures', 'latency_avg']
+            for metric in ['usage', 'failures', 'latency']
         }
 
 class ModuleLoader:

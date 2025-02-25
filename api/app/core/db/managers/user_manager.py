@@ -28,16 +28,14 @@ class UserManager:
     async def update_user(
         self,
         user_id: str,
-        new_data: Dict[str, Any],
-        upsert: bool = True
+        new_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
         try:
             update_data = {k: v for k, v in new_data.items() if k != '_id'}
             
             return await self.db.collection.update_one(
                 filter={'user_id': user_id},
-                update={'$set': update_data},
-                upsert=upsert
+                update={'$set': update_data}
             )
 
         except Exception as e:

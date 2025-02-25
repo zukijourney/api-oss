@@ -66,6 +66,8 @@ async def images_generations(
             status_code=e.status_code,
             detail=str(e)
         )
+    except HTTPException:
+        raise
     except Exception:
         traceback.print_exc()
         raise HTTPException(

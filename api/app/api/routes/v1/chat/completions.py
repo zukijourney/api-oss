@@ -88,6 +88,15 @@ async def chat_completions(
 
         provider_instance = BaseProvider.get_provider_class(provider['name'])
 
+        if not provider_instance:
+            raise HTTPException(
+                status_code=500,
+                detail=(
+                    'Something went wrong when getting the provider class, '
+                    'which turned out to be null. Please try again later.'
+                )
+            )
+
         response = await provider_instance.chat_completions(
             request,
             **data.model_dump(
@@ -97,16 +106,15 @@ async def chat_completions(
             )
         )
 
-        if not response:
-            raise HTTPException(status_code=503, detail='No sub-provider available')
-
         if response.status_code == 503:
-            print(f'{data.model}: No sub-provider available')
+            print(f'{data.model}: No sub-provider available ({provider["name"]})')
 
         return response
         
     except (InsufficientCreditsError, NoProviderAvailableError) as e:
         raise HTTPException(status_code=e.status_code, detail=str(e))
+    except HTTPException:
+        raise
     except Exception:
         traceback.print_exc()
         raise HTTPException(

@@ -2,6 +2,7 @@ import ujson
 import time
 import httpx
 import traceback
+import re
 from dataclasses import dataclass
 from fastapi import Request, Response, UploadFile
 from fastapi.responses import StreamingResponse
@@ -31,7 +32,10 @@ class SubProviderManager:
         sub_providers = await self.collection.find({
             'main_provider': self.provider_name,
             'models.api_name': {'$in': [model]},
-            'working': {'$exists': False}
+            '$or': [
+                {'working': True},
+                {'working': {'$exists': False}}
+            ]
         }).to_list(length=None)
 
         if not sub_providers:
@@ -39,10 +43,7 @@ class SubProviderManager:
 
         return min(
             sub_providers,
-            key=lambda x: (
-                x.get('usage', 0),
-                x.get('last_used', 0)
-            )
+            key=lambda x: (x.get('usage', 0), x.get('last_used', 0))
         )
 
     async def update_provider(
@@ -51,21 +52,18 @@ class SubProviderManager:
         new_data: Dict[str, Any]
     ) -> None:
         update_data = {k: v for k, v in new_data.items() if k != '_id'}
-        
-        await self.collection.update_one(
+        await self.collection.update_many(
             filter={'api_key': api_key},
-            update={'$set': update_data},
-            upsert=True
+            update={'$set': update_data}
         )
 
     async def disable_provider(
         self,
         api_key: str
     ) -> None:
-        await self.collection.update_one(
+        await self.collection.update_many(
             filter={'api_key': api_key},
-            update={'$set': {'working': False}},
-            upsert=True
+            update={'$set': {'working': False}}
         )
 
 class APIClient:
@@ -85,7 +83,10 @@ class APIClient:
         files: Dict[str, Any] = None,
         long_timeout: bool = False
     ) -> httpx.Response:
-        headers = {'authorization': f'Bearer {sub_provider["api_key"]}'}
+        headers = {
+            'authorization': f'Bearer {sub_provider["api_key"]}',
+            'openai-organization': sub_provider.get('organization', '')
+        }
         url = f'{self.config.base_url}/v1/{endpoint}'
 
         if long_timeout:
@@ -115,7 +116,7 @@ class ResponseHandler:
         return PrettyJSONResponse(
             content={
                 'error': {
-                    'message': message,
+                    'message': re.sub(r'[^/]+\.py', '', message),
                     'provider_id': self.config.provider_id,
                     'type': error_type,
                     'code': status_code
@@ -173,7 +174,7 @@ class MetricsManager:
         await self._update_provider_metrics(request, model, elapsed, word_count)
         await self._update_sub_provider_metrics(sub_provider)
         await self.update_user_credits(
-            request, model, request.state.token_count + token_count
+            request, model, token_count
         )
 
     def _calculate_counts(self, response_data: Dict[str, Any]) -> Tuple[int, int]:
@@ -222,19 +223,19 @@ class MetricsManager:
         elapsed: float,
         word_count: int
     ) -> None:
-        latency_avg = (elapsed / word_count) if word_count > 0 else 0
+        latency = (elapsed / word_count) if word_count > 0 else 0
 
         request.state.provider['usage'][model] = request.state.provider['usage'].get(model, 0) + 1
-        request.state.provider['latency_avg'][model] = (
-            (request.state.provider['latency_avg'].get(model, 0) + latency_avg) / 2 
-            if request.state.provider['latency_avg'].get(model, 0) != 0 
-            else latency_avg
+        request.state.provider['latency'][model] = (
+            (request.state.provider['latency'].get(model, 0) + latency) / 2 
+            if request.state.provider['latency'].get(model, 0) != 0 
+            else latency
         )
-        request.state.provider['last_used'] = time.time()
 
         await self.provider_manager.update_provider(
             request.state.provider_name,
-            request.state.provider
+            request.state.provider,
+            model
         )
 
     async def _update_sub_provider_metrics(
@@ -353,15 +354,16 @@ class EndpointHandler:
         request: Request,
         model: str
     ) -> PrettyJSONResponse:
-        if response.status_code == 400:
-            return
-        
-        await self.sub_provider_manager.disable_provider(
-            sub_provider['api_key']
-        )
+        if response.status_code in [401, 403, 404, 429]:
+            await self.sub_provider_manager.disable_provider(
+                sub_provider['api_key']
+            )
 
-        text = (await response.aread()).decode() if stream else response.text
-        await self._handle_error(request, model, text)
+        await self._handle_error(
+            request,
+            model,
+            (await response.aread()).decode() if stream else response.text
+        )
         return self.response_handler.create_error_response()
 
     async def handle_chat_completion(

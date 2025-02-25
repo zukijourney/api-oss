@@ -2,9 +2,9 @@ class InsufficientCreditsError(Exception):
     def __init__(self, available_credits: int, required_tokens: int):
         self.status_code = 429
         self.message = (
-            'Insufficient credits to process this request. '
+            f'Insufficient credits to process this request. '
             f'You currently have {available_credits} credits available, but this operation requires {required_tokens} credits. '
-            'Either upgrade your subscription tier, or wait for your credits to be replenished.'
+            f'Either upgrade your subscription tier, or wait for your credits to be replenished.'
         )
         super().__init__(self.message)
 

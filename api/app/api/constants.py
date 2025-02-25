@@ -1,9 +1,5 @@
 from fastapi import Depends
-from .dependencies import (
-    authentication,
-    validate_request_body,
-    validate_user_access
-)
+from .dependencies import authentication, validate_request_body, validate_user_access
 
 DEPENDENCIES = [
     Depends(authentication),

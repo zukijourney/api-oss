@@ -74,6 +74,8 @@ async def audio_transcriptions(
             status_code=e.status_code,
             detail=str(e)
         )
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(
             status_code=500,
